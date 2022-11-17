@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
-import { darkGreen, lightGreen, gunmetal, white, red } from './colors';
+import { darkGreen, lightGreen, gunmetal, white, red, rem } from './colors';
 
 const HamburgerButton = ({label, theme, onPress}) => {
     return ( 
@@ -16,10 +16,10 @@ const HamburgerButton = ({label, theme, onPress}) => {
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        width: 50,
-        height: 50,
+        width: 35,
+        height: 35,
         backgroundColor: lightGreen,
-        marginRight: '1rem',
+        marginRight: rem,
         borderRadius: 5
     },
     button: {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     hamburger: {
         backgroundColor: white,
         height: 3,
-        width: 32,
+        width: 25,
         marginTop: 8
     }
 })

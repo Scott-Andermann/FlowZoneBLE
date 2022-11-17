@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
-import { darkGreen, lightGreen, gunmetal, white, red } from './colors';
+import { darkGreen, lightGreen, gunmetal, white, red, rem } from './colors';
 
 const Button = ({label, theme, onPress}) => {
     if (theme === 'menu') {
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         // justifyContent: 'center',
         flexDirection: 'row',
-        paddingLeft: '2rem'
+        paddingLeft: 32
     },
     buttonLabel: {
         color: '#fff',

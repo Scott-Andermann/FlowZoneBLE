@@ -1,22 +1,32 @@
-import { StyleSheet, Text, View, TextInput, SliderComponent } from 'react-native';
-import { darkGreen, lightGreen, gunmetal, white, red } from '../components/colors';
-import { StatusBar } from 'expo-status-bar';
-import React, {useState, useEffect} from 'react';
+import { Platform, StyleSheet, Text, View, TextInput } from 'react-native';
+import { darkGreen, lightGreen, gunmetal, white, red, rem } from '../components/colors';
+import React, { useState, useEffect } from 'react';
+
+import 'react-native-get-random-values';
+import { nanoid } from 'nanoid';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { saveJob } from '../redux/slicers/jobSlice';
+
+import {SelectList} from 'react-native-dropdown-select-list';
 
 import Button from '../components/Button';
 import Header from '../components/Header';
 
-const CreateJobScreen = () => {
+const CreateJobScreen = ({navigation}) => {
 
     const [jobName, setJobName] = useState('');
     const [chemical, setChemical] = useState('');
-    const [startTime, setStartTime] = useState(new Date());
+    const [startTime, setStartTime] = useState('');
     const [notes, setNotes] = useState('');
     const [nozzle, setNozzle] = useState('');
     const [started, setStarted] = useState(false)
     const [timer, setTimer] = useState(0);
+    const [timeSpraying, setTimeSpraying] = useState(0);
+    const [volume, setVolume] = useState(0);
 
-    let interval;
+    const dispatch = useDispatch();
+    const nozzleOptions = Object.keys(useSelector((state) => state.nozzles.value));
 
     const handleJobStatus = () => {
         if (started) {
@@ -24,12 +34,14 @@ const CreateJobScreen = () => {
             alert('Recording stopped')
         } else {
             setStarted(true);
-            alert('Started recording')
+            setStartTime(Date.now());
+            // alert('Started recording');
         }
     }
 
-    const saveJob = () => {
+    const handleSaveJob = () => {
         const jobData = {
+            id: nanoid(),
             jobName: jobName,
             chemical: chemical,
             startTime: startTime,
@@ -37,18 +49,14 @@ const CreateJobScreen = () => {
             nozzle: nozzle,
             duration: timer
         }
-        // send jobData to redux store
-        console.log(jobData);
+        // console.log(jobData);
+        // TODO: validate fields before sending to redux store (including duration of job)
+        dispatch(saveJob(jobData));
         setJobName('');
         setChemical('');
         setStartTime('');
         setNotes('');
         setTimer(0);
-    }
-
-    const buildClock = () => {
-        const seconds = timer % 60;
-        const minutes = Math.floor(timer / 60) 
     }
 
     useEffect(() => {
@@ -59,6 +67,10 @@ const CreateJobScreen = () => {
             return () => clearInterval(interval)}
         }
     , [started]);
+
+    useEffect(() => {
+        setVolume(timeSpraying * nozzle / 60)
+    }, [timeSpraying]);
 
     return ( 
     <View style={styles.container}>
@@ -75,22 +87,29 @@ const CreateJobScreen = () => {
         placeholder="Chemical"
         />
         <TextInput 
-        style={styles.inputField}
+        style={Platform.OS === 'ios' ? styles.iosTextArea : styles.inputField}
         onChangeText={setNotes}
         value={notes}
         placeholder="Add Notes"
         multiline={true}
         numberOfLines={3}
         />
-        <TextInput 
+        {/* <TextInput 
         style={styles.inputField}
         onChangeText={setNozzle}
         value={nozzle}
         placeholder="Nozzle"
-        />
+        /> */}
+        <SelectList 
+            boxStyles={styles.inputField}
+            dropdownStyles={styles.inputField}
+            setSelected={(val) => setNozzle(val)}
+            data={nozzleOptions}
+            save='value'/>
         <Text style={styles.timer}>Duration of job: <Text style={{...styles.timer, ...styles.timerInset}}>{Math.floor(timer / 60)}m{timer % 60}s</Text></Text>
         <Button label={started ? 'Stop recording' : 'Start Job'} theme='centered' onPress={handleJobStatus}/>
-        <Button label='Save Job' theme='centered' onPress={saveJob}/>
+        <Button label='Save Job' theme='centered' onPress={handleSaveJob}/>
+        <Button label='View Jobs' theme='centered' onPress={() => navigation.navigate('prevJobs')}/>
     </View>
      );
 }
@@ -101,12 +120,12 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
         backgroundColor: gunmetal,
-        padding: '1rem',
-        paddingTop: '0.5rem'
+        padding: rem,
+        paddingTop: 0.5 * rem
     },  
     inputField: {
         // margin: '0.5rem',
-        marginTop: '0.5rem',
+        marginTop: 0.5 * rem,
         backgroundColor: white,
         fontSize: 20,
         width: '100%',
@@ -118,6 +137,13 @@ const styles = StyleSheet.create({
     timerInset: {
         color: red,
         fontSize: 24,
+    },
+    iosTextArea: {
+        marginTop: 0.5 * rem,
+        backgroundColor: white,
+        fontSize: 20,
+        minHeight: 80,
+        width: '100%',
     }
 })
  
