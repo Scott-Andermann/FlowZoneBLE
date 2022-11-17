@@ -13,6 +13,7 @@ import CreateJobScreen from './src/screens/CreateJobScreen';
 import PreviousJobsScreen from './src/screens/PreviousJobsScreen';
 import HamburgerButton from './src/components/HamburgerButton';
 import MenuModal from './src/components/MenuModal';
+import BleScreen from './src/screens/BleScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,7 +42,8 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='createJob' screenOptions={{ ...headerOptions }}>
+        <Stack.Navigator initialRouteName='ble' screenOptions={{ ...headerOptions }}>
+          <Stack.Screen name='ble' component={BleScreen} options={{title: 'BLE sandbox'}} />
           <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'FlowZone TruFlow' }} />
           <Stack.Screen name="createJob" component={CreateJobScreen} options={{ title: 'Create Job' }}/>
           <Stack.Screen name="prevJobs" component={PreviousJobsScreen} options={{ title: 'Previous Jobs' }} />
