@@ -1,0 +1,9 @@
+From Arduino:
+Should I only send data when spray period ends? This would be lower power, and easier to track since timer woudl be isolated on sprayer
+
+Receive from sprayer:
+JSON
+{
+    powerOnTime: xx ms
+    speed: 1-5 - this will have to be interpolated based on the dial position
+}

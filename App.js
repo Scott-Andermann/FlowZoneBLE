@@ -26,28 +26,28 @@ export default function App() {
     },
     headerTintColor: white,
   }
-  const headerRight = {
-    headerRight: () => (
-      <HamburgerButton
-        onPress={() => {
-          setModalVisible(!modalVisible);
-          alert('Menu modal is not hooked up to navigation')
-        }}
-      />
-    )
+  // const headerRight = {
+  //   headerRight: () => (
+  //     <HamburgerButton
+  //       onPress={() => {
+  //         setModalVisible(!modalVisible);
+  //         alert('Menu modal is not hooked up to navigation')
+  //       }}
+  //     />
+  //   )
 
-  }
+  // }
 
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='createJob' screenOptions={{ ...headerOptions, ...headerRight }}>
+        <Stack.Navigator initialRouteName='createJob' screenOptions={{ ...headerOptions }}>
           <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'FlowZone TruFlow' }} />
-          <Stack.Screen name="createJob" component={CreateJobScreen} options={{ ...headerRight, title: 'Create Job' }}/>
-          <Stack.Screen name="prevJobs" component={PreviousJobsScreen} options={{ ...headerRight, title: 'Previous Jobs' }} />
-          <Stack.Screen name="createNozzle" component={CreateJobScreen} options={{ ...headerRight, title: 'Create Nozzle Profile' }} />
-          <Stack.Screen name="viewSprayer" component={CreateJobScreen} options={{ ...headerRight, title: 'Sprayer Details' }} />
-          <Stack.Screen name="techProfile" component={CreateJobScreen} options={{ ...headerRight, title: 'Technician Profile' }} />
+          <Stack.Screen name="createJob" component={CreateJobScreen} options={{ title: 'Create Job' }}/>
+          <Stack.Screen name="prevJobs" component={PreviousJobsScreen} options={{ title: 'Previous Jobs' }} />
+          <Stack.Screen name="createNozzle" component={CreateJobScreen} options={{ title: 'Create Nozzle Profile' }} />
+          <Stack.Screen name="viewSprayer" component={CreateJobScreen} options={{ title: 'Sprayer Details' }} />
+          <Stack.Screen name="techProfile" component={CreateJobScreen} options={{ title: 'Technician Profile' }} />
           <Stack.Screen name="Modal" component={MenuModal} options={{presentation: 'transparentModal'}} />
         </Stack.Navigator>
         <MenuModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>

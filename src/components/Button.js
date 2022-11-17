@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { darkGreen, lightGreen, gunmetal, white, red, rem } from './colors';
 
-const Button = ({label, theme, onPress}) => {
+const Button = ({label, theme, onPress, disabled}) => {
     if (theme === 'menu') {
         return (
             <View style={menuStyles.buttonContainer}>
-                <Pressable style={menuStyles.button} onPress={onPress}>
-                    <Text style={menuStyles.buttonLabel}>{label}</Text>
+                <Pressable style={menuStyles.button} onPress={onPress} disabled={disabled}>
+                    <Text style={[menuStyles.buttonLabel, disabled ? {color: '#7a7a7a'} : {color: '#fff'}]}>{label}</Text>
                 </Pressable>
             </View>
 
@@ -15,8 +15,8 @@ const Button = ({label, theme, onPress}) => {
     if (theme === 'centered') {
         return (
             <View style={centeredStyles.buttonContainer}>
-                <Pressable style={centeredStyles.button} onPress={onPress}>
-                    <Text style={centeredStyles.buttonLabel}>{label}</Text>
+                <Pressable style={centeredStyles.button} onPress={onPress} disabled={disabled}>
+                    <Text style={[centeredStyles.buttonLabel, disabled ? {color: '#7a7a7a'} : {color: '#fff'}]}>{label}</Text>
                 </Pressable>
             </View>
 
@@ -27,7 +27,7 @@ const Button = ({label, theme, onPress}) => {
     return ( 
         <View style={styles.buttonContainer}>
             <Pressable style={styles.button} onPress={onPress}>
-                <Text style={styles.buttonLabel}>{label}</Text>
+                <Text style={[styles.buttonLabel, disabled ? {color: '#7a7a7a'} : {color: '#fff'}]}>{label}</Text>
             </Pressable>
         </View>
      );
@@ -54,8 +54,11 @@ const menuStyles = StyleSheet.create({
         flexDirection: 'row',
     },
     buttonLabel: {
-        color: '#fff',
+        // color: '#fff',
         fontSize: 30
+    },
+    disabled: {
+        color: '#7a7a7a'
     }
 });
 
