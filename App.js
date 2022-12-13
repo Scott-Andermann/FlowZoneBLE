@@ -42,7 +42,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='ble' screenOptions={{ ...headerOptions }}>
+        <Stack.Navigator initialRouteName='Home' screenOptions={{ ...headerOptions }}>
           <Stack.Screen name='ble' component={BleScreen} options={{title: 'BLE sandbox'}} />
           <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'FlowZone TruFlow' }} />
           <Stack.Screen name="createJob" component={CreateJobScreen} options={{ title: 'Create Job' }}/>

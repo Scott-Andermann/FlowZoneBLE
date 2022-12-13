@@ -1,7 +1,7 @@
-import { View, Text } from 'react-native';
-import { BleManager, Device } from 'react-native-ble-plx';
+import { StyleSheet, View, Text } from 'react-native';
+// import { BleManager, Device } from 'react-native-ble-plx';
 
-const manager = new BleManager();
+// const manager = new BleManager();
 
 const BleScreen = () => {
     return (
@@ -17,7 +17,7 @@ const BleScreen = () => {
 
 const styles = StyleSheet.create({
     body: {
-        backgroundColor: Colors.red,
+        backgroundColor: '#fff',
     },
     sectionContainer: {
         marginTop: 32,
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: 24,
         fontWeight: '600',
-        color: Colors.black,
+        color: '#000',
     },
 
 });
